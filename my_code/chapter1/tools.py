@@ -1,8 +1,8 @@
 """为Agent提供能力的Tools"""
 
-import os
 import requests
 from tavily import TavilyClient
+from ..gloable_config import TAVILY_API_KEY
 
 
 def get_current_weather(city: str) -> str:
@@ -31,12 +31,8 @@ def get_current_weather(city: str) -> str:
 def get_recommended_attractions(city: str, weather: str) -> str:
     """根据城市名称和当前天气，推荐旅游景点的tool"""
 
-    tavily_api_key = os.environ.get("TAVILY_API_KEY")
-    if tavily_api_key is None:
-        return "未配置tavily的API key！"
-
     # 初始化tavily客户端
-    client = TavilyClient(api_key=tavily_api_key)
+    client = TavilyClient(api_key=TAVILY_API_KEY)
     # 构造一个查询prompt
     query_prompt = f"请推荐{weather}天气下，{city}最值得去的旅游景点，并给出理由"
 
